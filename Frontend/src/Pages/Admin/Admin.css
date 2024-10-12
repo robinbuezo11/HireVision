@@ -10,3 +10,14 @@
     flex: 1;
     overflow: hidden;
 }
+
+@media (max-width: 768px) {
+    .container-panel {
+        flex-direction: column;
+    }
+
+    .main {
+        flex-direction: column;
+        overflow: visible;
+    }
+}

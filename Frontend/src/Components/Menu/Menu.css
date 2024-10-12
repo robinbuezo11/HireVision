@@ -36,3 +36,20 @@
     font-size: 1.2rem;
     color: #333;
 }
+
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        max-width: 16rem;
+        background-color: var(--menu-color);
+        transition: all 0.3s ease;
+    }
+
+    .menu.show {
+        display: block;
+    }
+}

@@ -32,7 +32,8 @@
 .search-icon {
     position: absolute;
     top: 50%;
-    left: 10px;
+    left: 1rem;
+    font-size: 1.3rem;
     transform: translateY(-50%);
     color: var(--inputs-color);
 }
@@ -57,4 +58,27 @@
     height: 3.5rem;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.menu-icon {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .topBar {
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .bar, .user-icon {
+        display: none;
+    }
+    .menu-icon {
+        cursor: pointer;
+        display: block;
+    }
+    .io-menu {
+        font-size: 2.5rem;
+    }
 }
