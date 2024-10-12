@@ -1,0 +1,12 @@
+.container-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--white-color);
+}
+
+.main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}

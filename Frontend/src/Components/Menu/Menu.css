@@ -1,0 +1,38 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    height: calc(100vh - 60px);
+    max-width: 16rem;
+    background-color: var(--menu-color);
+    padding: 1rem;
+}
+
+.menu-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: var(--menu-color2);
+}
+
+.menu-icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    color: #333;
+}
