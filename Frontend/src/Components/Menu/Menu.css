@@ -9,6 +9,19 @@
     padding: 1rem;
 }
 
+.profile {
+    display: none;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.profile img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .menu-options {
     list-style: none;
     padding: 0;
@@ -52,4 +65,14 @@
     .menu.show {
         display: block;
     }
+
+    .profile {
+        display: flex;
+    }
+}
+
+.menu-options .menu-item .menu-icon {
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-right: 1rem;
 }
