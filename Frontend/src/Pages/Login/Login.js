@@ -7,15 +7,17 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSignupRedirect = () => {
-        navigate('/signup');
-    };
-
     const handleAdminRedirect = (e) => {
         e.preventDefault();
+
+        // Verifica si es el admin
         if (email === 'admin@hirevision.com' && password === 'admin') {
+            // Almacena la información del usuario en localStorage
+            localStorage.setItem('user', JSON.stringify({ email, role: 'admin' }));
             navigate('/admin');
         } else {
+            // Almacena la información del usuario común
+            localStorage.setItem('user', JSON.stringify({ email, role: 'user' }));
             navigate('/user');
         }
     };
@@ -50,7 +52,7 @@ const Login = () => {
                 </div>
                 <button type='submit'>Iniciar Sesión</button>
             </form>
-            <p>¿No tienes una cuenta? <span onClick={handleSignupRedirect}>Regístrate aquí</span></p>
+            <p className='login-signup'>¿No tienes una cuenta? <span className='navigate' onClick={() => navigate('/signup')}>Regístrate aquí</span></p>
         </div>
     );
 };

@@ -2,14 +2,22 @@ import React, { useState } from 'react';
 import { FaSearch, FaUser } from 'react-icons/fa';
 import { IoMenu, IoClose } from 'react-icons/io5';
 import { IoIosLogOut } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 import './TopBar.css';
 
 const TopBar = ({ toggleMenu, menuOpen }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const navigate = useNavigate();
 
     const toggleDropdown = () => {
-        setDropdownVisible(!dropdownVisible)
-    }
+        setDropdownVisible(!dropdownVisible);
+    };
+
+    const handleLogout = () => {
+        // Elimina la información del usuario de localStorage
+        localStorage.removeItem('user');
+        navigate('/');
+    };
 
     return (
         <div className='topBar'>
@@ -36,8 +44,8 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                 {
                     dropdownVisible && (
                         <div className='panel-profile'>
-                            <p> <FaUser /> Editar mi perfil</p>
-                            <p className='logout'> <IoIosLogOut /> Salir</p>
+                            <p className='option'> <FaUser /> Editar mi perfil</p>
+                            <p className='option logout' onClick={handleLogout}> <IoIosLogOut /> Salir</p>
                         </div>
                     )
                 }

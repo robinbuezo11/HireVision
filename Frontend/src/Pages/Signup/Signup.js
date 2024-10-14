@@ -22,10 +22,6 @@ const Signup = () => {
         document.getElementById('profile-pic').click();
     };
 
-    const handleLoginRedirect = () => {
-        navigate('/');
-    };
-
     return (
         <div className='container'>
             <h1>¡Regístrate en HireVision!</h1>
@@ -69,7 +65,7 @@ const Signup = () => {
                 </div>
                 <button type='submit' className='full-width'>Crear Cuenta</button>
             </form>
-            <p>¿Ya tienes una cuenta? <span onClick={handleLoginRedirect}>Inicia Sesión aquí</span></p>
+            <p className='login-signup'>¿Ya tienes una cuenta? <span className='navigate' onClick={() => navigate('/')}>Inicia Sesión aquí</span></p>
         </div>
     );
 };

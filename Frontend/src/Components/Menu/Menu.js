@@ -4,7 +4,7 @@ import { IoIosLogOut } from 'react-icons/io';
 import './Menu.css';
 
 const Menu = ({ isOpen }) => {
-    const isMobile = window.innerWidth <= 768; // Verifica si es vista móvil
+    const isMobile = window.innerWidth <= 768;
 
     return (
         <div className={`menu ${isOpen ? 'show' : ''}`}>

@@ -81,11 +81,11 @@ button:hover {
     background-color: var(--dark-blue);
 }
 
-p {
+.login-signup {
     color: var(--inputs-color);
 }
 
-span {
+.navigate {
     color: var(--inputs-color);
     font-weight: 700;
     cursor: pointer;
