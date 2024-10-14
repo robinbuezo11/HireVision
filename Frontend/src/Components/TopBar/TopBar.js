@@ -1,9 +1,16 @@
-import React from 'react';
-import { FaSearch } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaSearch, FaUser } from 'react-icons/fa';
 import { IoMenu, IoClose } from 'react-icons/io5';
+import { IoIosLogOut } from "react-icons/io";
 import './TopBar.css';
 
 const TopBar = ({ toggleMenu, menuOpen }) => {
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdownVisible(!dropdownVisible)
+    }
+
     return (
         <div className='topBar'>
             <div className='topBar-header'>
@@ -20,8 +27,20 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                     <input className='search' type='text' id='search' name='search' placeholder='Buscar empleos'/>
                 </div>
             </div>
-            <div className='user-icon'>
-                <img src='/Profile.svg' alt='User Icon'/>
+            <div className={`user-profile ${dropdownVisible ? 'active' : ''}`} onClick={toggleDropdown}>
+                <div className='user-icon'>
+                    <img src='/Profile.svg' alt='User Profile'/>
+                </div>
+                <span className='user-name'>Administrador</span>
+
+                {
+                    dropdownVisible && (
+                        <div className='panel-profile'>
+                            <p> <FaUser /> Editar mi perfil</p>
+                            <p className='logout'> <IoIosLogOut /> Salir</p>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );

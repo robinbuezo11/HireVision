@@ -8,3 +8,7 @@ body {
 code {
   font-family: "Inter", sans-serif;
 }
+
+h1 {
+  margin: 0;
+}

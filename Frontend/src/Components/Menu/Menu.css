@@ -50,11 +50,16 @@
     color: #333;
 }
 
+.logout {
+    color: var(--logout-color);
+}
+
+
 @media (max-width: 768px) {
     .menu {
         display: none;
         position: absolute;
-        top: 60px;
+        top: 6rem;
         right: 0;
         width: 100%;
         max-width: 16rem;
