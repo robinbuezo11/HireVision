@@ -1,10 +1,17 @@
 import React from 'react';
 import { FaBriefcase, FaRegFile, FaUser } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 import './Menu.css';
 
 const Menu = ({ isOpen }) => {
     const isMobile = window.innerWidth <= 768;
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        navigate('/');
+    };
 
     return (
         <div className={`menu ${isOpen ? 'show' : ''}`}>
@@ -24,7 +31,7 @@ const Menu = ({ isOpen }) => {
                         <li className='menu-item'>
                             <FaUser className='menu-icon' /> Editar mi perfil
                         </li>
-                        <li className='menu-item logout'>
+                        <li className='menu-item logout' onClick={handleLogout}>
                             <IoIosLogOut className='menu-icon logout' /> Salir
                         </li>
                     </>

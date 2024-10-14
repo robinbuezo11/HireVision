@@ -14,7 +14,6 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
     };
 
     const handleLogout = () => {
-        // Elimina la información del usuario de localStorage
         localStorage.removeItem('user');
         navigate('/');
     };
