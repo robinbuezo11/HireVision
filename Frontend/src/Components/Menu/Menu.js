@@ -4,7 +4,7 @@ import { IoIosLogOut } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import './Menu.css';
 
-const Menu = ({ isOpen }) => {
+const Menu = ({ isOpen, onPanelChange }) => {
     const isMobile = window.innerWidth <= 768;
     const navigate = useNavigate();
 
@@ -20,10 +20,10 @@ const Menu = ({ isOpen }) => {
                 <span className='user-name'>Administrador</span>
             </div>
             <ul className='menu-options'>
-                <li className='menu-item'>
+                <li className='menu-item' onClick={() => onPanelChange('jobs')}>
                     <FaBriefcase className='menu-icon' /> Empleos
                 </li>
-                <li className='menu-item'>
+                <li className='menu-item' onClick={() => onPanelChange('applications')}>
                     <FaRegFile className='menu-icon' /> Postulados
                 </li>
                 {isMobile && (
