@@ -12,7 +12,7 @@ const Login = () => {
     };
 
     const handleAdminRedirect = (e) => {
-        e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+        e.preventDefault();
         if (email === 'admin@hirevision.com' && password === 'admin') {
             navigate('/admin');
         } else {

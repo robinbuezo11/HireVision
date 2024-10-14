@@ -6,8 +6,13 @@ import './TopBar.css';
 const TopBar = ({ toggleMenu, menuOpen }) => {
     return (
         <div className='topBar'>
-            <div className='logo'>
-                <h1>Hire<span>Vision</span></h1>
+            <div className='topBar-header'>
+                <div className='logo'>
+                    <h1>Hire<span>Vision</span></h1>
+                </div>
+                <div className='menu-icon' onClick={toggleMenu}>
+                    {menuOpen ? <IoClose className='io-menu' /> : <IoMenu className='io-menu' />}
+                </div>
             </div>
             <div className='bar'>
                 <div className='search-bar'>
@@ -17,9 +22,6 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
             </div>
             <div className='user-icon'>
                 <img src='/Profile.svg' alt='User Icon'/>
-            </div>
-            <div className='menu-icon' onClick={toggleMenu}>
-                {menuOpen ? <IoClose className='io-menu' /> : <IoMenu className='io-menu' />}
             </div>
         </div>
     );

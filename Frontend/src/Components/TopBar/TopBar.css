@@ -66,13 +66,26 @@
 
 @media (max-width: 768px) {
     .topBar {
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;
         padding-left: 1rem;
         padding-right: 1rem;
     }
-    .bar, .user-icon {
+    .topBar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+    }
+    .user-icon {
         display: none;
+    }
+    .bar {
+        width: 90%;
+        margin-top: 1.5rem;
+    }
+    .search-bar {
+        width: 100%;
+        max-width: none;
     }
     .menu-icon {
         cursor: pointer;
