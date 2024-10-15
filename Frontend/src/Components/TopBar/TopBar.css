@@ -71,6 +71,7 @@
     margin-left: auto;
     cursor: pointer;
     border: .5px solid transparent;
+    z-index: 50;
 }
 
 .user-profile.active {
