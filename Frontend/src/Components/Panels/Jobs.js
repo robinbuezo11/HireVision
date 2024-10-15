@@ -1,21 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Jobs.css';
+import JobForm from './JobForm';
 
 const Jobs = () => {
+    const [showModal, setShowModal] = useState(false);
+
     const jobs = Array.from({ length: 4 }, (_, index) => ({
         id: index + 1,
         title: `Trabajo ${index + 1}`,
         description: `Descripción del trabajo ${index + 1}`,
         date: '20 Sep, 2024',
         salary: '1000 USD/mes',
-        skills: ['Figma', 'Adobe XD'], // Skills como tags
+        skills: ['Figma', 'Adobe XD'],
     }));
+
+    const handleNewJobClick = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     return (
         <div className="jobs-container">
             <div className="jobs-header">
-                <button className="btn btn-new-job">Nuevo Puesto</button>
+                <button className="btn btn-new-job" onClick={handleNewJobClick}>
+                    Nuevo Puesto
+                </button>
             </div>
+
             <div className="jobs-grid">
                 {jobs.map((job) => (
                     <div key={job.id} className="job-card">
@@ -38,6 +52,18 @@ const Jobs = () => {
                     </div>
                 ))}
             </div>
+
+            {showModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close-btn" onClick={handleCloseModal}>
+                            &times;
+                        </span>
+                        <h2 className='title-modal'>Nuevo Puesto</h2>
+                        <JobForm />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

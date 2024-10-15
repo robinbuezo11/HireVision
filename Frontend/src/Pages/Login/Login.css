@@ -91,7 +91,6 @@ button:hover {
     cursor: pointer;
 }
 
-/* Media query para tablets (ancho máximo 768px) */
 @media (max-width: 768px) {
     h1 {
         font-size: 1.8rem;
@@ -108,7 +107,6 @@ button:hover {
     }
 }
 
-/* Media query para móviles (ancho máximo 480px) */
 @media (max-width: 480px) {
     h1 {
         font-size: 1.5rem;
