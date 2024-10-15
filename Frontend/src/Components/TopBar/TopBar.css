@@ -7,17 +7,15 @@
     padding-right: 3rem;
 }
 
-.logo h1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.2rem;
-    font-weight: lighter;
-    color: var(--text-color);
-    margin: 0;
-    line-height: 1;
+.logo-img {
+    width: auto;
+    height: 120px; /* Ajusta este valor según el tamaño del h1 */
+    object-fit: contain;
 }
 
+.logo h1 {
+    display: none; /* Opcional, si no quieres que el h1 se muestre */
+}
 .logo span {
     color: var(--text-color);;
     font-weight: bold;
