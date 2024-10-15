@@ -2,21 +2,28 @@ import React, { useState } from 'react';
 import { FaSearch, FaUser } from 'react-icons/fa';
 import { IoMenu, IoClose } from 'react-icons/io5';
 import { IoIosLogOut } from "react-icons/io";
-import { useNavigate } from 'react-router-dom';
 import './TopBar.css';
 import logo from './UD.png';
 
 const TopBar = ({ toggleMenu, menuOpen }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const navigate = useNavigate();
+    const [isProfileOpen, setIsProfileOpen] = useState(false); // Estado para controlar la ventana emergente
 
     const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible);
     };
 
+    const handleViewProfile = () => {
+        setIsProfileOpen(true); // Mostrar la ventana emergente
+    };
+
     const handleLogout = () => {
         localStorage.removeItem('user');
-        navigate('/');
+        console.log('logout');
+    };
+
+    const closeProfileModal = () => {
+        setIsProfileOpen(false); // Cerrar la ventana emergente
     };
 
     return (
@@ -45,12 +52,36 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                 {
                     dropdownVisible && (
                         <div className='panel-profile'>
-                            <p className='option'> <FaUser /> Editar mi perfil</p>
+                            <p className='option' onClick={handleViewProfile}> <FaUser /> Mi perfil</p>
                             <p className='option logout' onClick={handleLogout}> <IoIosLogOut /> Salir</p>
                         </div>
                     )
                 }
             </div>
+
+            {/* Ventana emergente para ver el perfil */}
+            {isProfileOpen && (
+                <div className='edit-profile-modal'>
+                    <div className='edit-profile-content'>
+                        <h2>Mi Perfil</h2>
+                        {/* Botón "X" para cerrar */}
+                        <button className='close-btn' onClick={closeProfileModal}>X</button>
+                        <div className='profile-picture'>
+                            <img src='/Profile.svg' alt='Imagen de perfil' />
+                        </div>
+                        <div>
+                            <p>Administrador</p> {/* Usuario quemado */}
+                        </div>
+                        <div>
+                            <p>admin@hirevision.com</p> {/* Correo quemado */}
+                        </div>
+                        <div>
+                            <p>01/01/1990</p> {/* fecha quemada */}
+                        </div>
+                        <button className='save-btn'>Editar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

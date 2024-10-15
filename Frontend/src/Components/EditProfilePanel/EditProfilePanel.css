@@ -1,0 +1,44 @@
+.edit-profile-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease;
+    z-index: 999;
+}
+
+.edit-profile-panel.open {
+    right: 0;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.panel-body {
+    padding: 20px;
+}
+
+.panel-body input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+.panel-body button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.panel-body button:hover {
+    background-color: #0056b3;
+}
