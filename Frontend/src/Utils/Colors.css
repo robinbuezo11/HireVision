@@ -12,4 +12,10 @@
     --logout-color: #F77;
     --hover-color: #F5F7F7;
     --hover-color2: #E8ECED;
+
+    /* Cards */
+    --bg-color-primary: #ffe4d4;
+    --bg-color-secondary: #c5f0dc;
+    --bg-color-tertiary: #ded7f0;
+    --bg-color-quaternary: #c6e8f0;
 }

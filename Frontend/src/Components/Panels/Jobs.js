@@ -14,7 +14,7 @@ const Jobs = () => {
     return (
         <div className="jobs-container">
             <div className="jobs-header">
-                <button className="btn btn-new-job">Nuevo Trabajo</button>
+                <button className="btn btn-new-job">Nuevo Puesto</button>
             </div>
             <div className="jobs-grid">
                 {jobs.map((job) => (
