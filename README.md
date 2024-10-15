@@ -1,9 +1,10 @@
+`Proyecto 1 del Laboratorio del Curso de Seminario de Sistemas 1`
+
 ![HireVision](./Documentación/Hirevision.png)
 
-`Proyecto 1 del Laboratorio del Curso de Seminario de Sistemas 1`
-| Curso | Sección |
-|---------------------------|-----------|
-|Seminario de Sistemas I |A |
+| Curso                   | Sección |
+| ----------------------- | ------- |
+| Seminario de Sistemas I | A       |
 
 ### Integrantes ✨
 
