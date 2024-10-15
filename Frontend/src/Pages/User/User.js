@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './User.css';
 import TopBar from '../../Components/TopBar/TopBar';
 import Menu from '../../Components/Menu/Menu';
-import Jobs from '../../Components/Panels/GetJob';
-import Postulates from '../../Components/Panels/Postulates';
+// import Jobs from '../../Components/Panels/GetJob';
+// import Postulates from '../../Components/Panels/Postulates';
 
 const User = () => {
     const navigate = useNavigate();
@@ -15,8 +15,12 @@ const User = () => {
     });
 
     useEffect(() => {
-        
+        const user = JSON.parse(localStorage.getItem('user'));
 
+        // Verifica si el usuario está logueado y es admin
+        if (!user || user.role !== 'user') {
+            navigate('/');
+        }
     }, [navigate]);
 
     const toggleMenu = () => {
@@ -34,7 +38,7 @@ const User = () => {
             <div className='main'>
                 <Menu isOpen={menuOpen} onPanelChange={handlePanelChange} />
                 <div className='panel-section'>
-                    {activePanel === 'jobs' ? <Jobs /> : <Postulates />}
+                    {/* {activePanel === 'jobs' ? <Jobs /> : <Postulates />} */}
                 </div>
             </div>
         </div>

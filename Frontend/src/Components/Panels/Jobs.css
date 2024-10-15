@@ -1,0 +1,118 @@
+:root {
+    --bg-color-primary: #ffe4d4;  /* Color para la primera tarjeta */
+    --bg-color-secondary: #c5f0dc; /* Color para la segunda tarjeta */
+    --bg-color-tertiary: #ded7f0;  /* Color para la tercera tarjeta */
+    --bg-color-quaternary: #c6e8f0; /* Color para la cuarta tarjeta */
+    --text-color-primary: #333;
+    --text-secondary-color: #666;
+    --btn-primary-bg: #000;
+    --btn-primary-hover-bg: #333;
+    --tag-border-color: #999; /* Color del borde de los tags */
+}
+
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.job-card {
+    background-color: var(--bg-color-primary);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    transition: transform 0.2s, background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.job-card:nth-child(2) {
+    background-color: var(--bg-color-secondary);
+}
+.job-card:nth-child(3) {
+    background-color: var(--bg-color-tertiary);
+}
+.job-card:nth-child(4) {
+    background-color: var(--bg-color-quaternary);
+}
+
+.job-card-header {
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.job-date {
+    padding: 0.25rem 0.5rem;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    background-color: white;
+    color: var(--text-secondary-color);
+    margin-right: 0.5rem;
+}
+
+
+.job-title {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+.job-description {
+    color: var(--text-secondary-color);
+    margin-bottom: 0.75rem;
+    flex: 1;
+}
+
+.job-skills {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.job-skill-tag {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--tag-border-color);
+    border-radius: 16px;
+    font-size: 0.85rem;
+    color: var(--text-secondary-color);
+}
+
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.job-salary {
+    font-weight: bold;
+    color: var(--text-color-primary);
+}
+
+.btn {
+    background-color: var(--btn-primary-bg);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--btn-primary-hover-bg);
+}
+
+.btn-new-job {
+    margin: 1rem;
+}
+
+@media (max-width: 768px) {
+    .jobs-grid {
+        grid-template-columns: 1fr;
+    }
+}
