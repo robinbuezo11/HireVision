@@ -138,62 +138,6 @@ form {
     flex-direction: column;
 }
 
-.form-group1 {
-    position: relative;
-    margin-bottom: 2rem;
-}
-
-input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--inputs-color);
-    border-radius: 5px;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-input:focus {
-    outline: none;
-    border-color: var(--inputs-color);
-}
-
-input:focus + label,
-input:not(:placeholder-shown) + label {
-    top: -10px;
-    left: -5px;
-    font-size: 0.8rem;
-    color: var(--inputs-color);
-    background-color: var(--white-color);
-}
-
-label {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    transition: 0.2s ease all;
-    background-color: var(--white-color);
-    padding: 0 5px;
-    color: var(--inputs-color);
-    font-size: 1rem;
-    pointer-events: none;
-}
-
-button {
-    padding: 0.75rem;
-    background-color: var(--light-blue);
-    color: var(--white-color);
-    border: none;
-    border-radius: 5px;
-    font-family: var(--font-family);
-    font-size: 1.3rem;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: var(--dark-blue);
-}
-
 /* Tamaño fijo para el editor de texto con scroll */
 .ql-container {
     border: 1px solid var(--inputs-color);
