@@ -7,18 +7,35 @@
     padding-right: 3rem;
 }
 
-.logo-img {
-    width: auto;
-    height: 120px; /* Ajusta este valor según el tamaño del h1 */
-    object-fit: contain;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
 }
 
 .logo h1 {
-    display: none; /* Opcional, si no quieres que el h1 se muestre */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: lighter;
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1;
 }
+
 .logo span {
     color: var(--text-color);;
     font-weight: bold;
+}
+
+.logo-img {
+    width: auto;
+    height: 2rem;
+    object-fit: contain;
 }
 
 .bar {

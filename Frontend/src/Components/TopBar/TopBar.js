@@ -4,7 +4,7 @@ import { IoMenu, IoClose } from 'react-icons/io5';
 import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import './TopBar.css';
-import logo from './v3.2.png';
+import logo from './UD.png';
 
 const TopBar = ({ toggleMenu, menuOpen }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -23,7 +23,8 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
         <div className='topBar'>
             <div className='topBar-header'>
                 <div className='logo'>
-                    <img src={logo} alt="Logo" className='logo-img' /> {/* Aplica la clase logo-img */}
+                    <img src={logo} alt="Logo" className='logo-img' />
+                    <h1>Hire<span>Vision</span></h1>
                 </div>
                 <div className='menu-icon' onClick={toggleMenu}>
                     {menuOpen ? <IoClose className='io-menu' /> : <IoMenu className='io-menu' />}
