@@ -274,19 +274,51 @@ form {
     padding: 15px; /* Espacio alrededor del botón */
 }
 
+.modal-header {
+    display: flex;
+    justify-content: space-between; /* Espaciado entre el título y el botón */
+    align-items: center; /* Centrar verticalmente el contenido */
+    margin-bottom: 15px; /* Espacio debajo del encabezado */
+}
+
 .btn-apply {
-    background-color: #007bff; /* Color del botón, puedes cambiarlo */
-    color: white;
+    background-color: #f4c8c8; /* Color de fondo claro */
+    color: black; /* Color del texto en negro */
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    border: 1px solid #d1a1a1; /* Borde del botón */
 }
 
 .btn-apply:hover {
-    background-color: #0056b3; /* Color de fondo al pasar el cursor */
+    background-color: #e8a3a3; /* Color de fondo más oscuro al pasar el cursor */
 }
 
+.modal-content {
+    /* Resto de tus estilos aquí */
+    border-radius: 8px; /* Esquinas redondeadas para el contenido del modal */
+}
 
+.modal-description {
+    background-color: white; /* Color de fondo blanco para la descripción */
+    padding: 15px; /* Espaciado interno */
+    border-radius: 5px; /* Esquinas redondeadas para la descripción */
+    color: #333; /* Color de texto para la descripción */
+    margin-top: 15px; /* Espacio superior para separar de la sección anterior */
+}
 
+/* Si necesitas un estilo adicional para la separación */
+.description-separator {
+    height: 1px; /* Altura de la línea */
+    background-color: #ccc; /* Color de la línea */
+    margin: 10px 0; /* Espaciado vertical */
+}
+.file-upload {
+    transition: background-color 0.3s ease;
+}
+
+.file-upload:hover {
+    background-color: #e3f2fd;
+}

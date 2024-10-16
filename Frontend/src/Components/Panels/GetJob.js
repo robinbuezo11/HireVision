@@ -4,6 +4,7 @@ import './GetJob.css';
 const GetJob = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedJob, setSelectedJob] = useState(null);
+    const [file, setFile] = useState(null); // Estado para almacenar el archivo cargado
 
     const colors = [
         '#ffab91', // Color pastel 1
@@ -31,10 +32,34 @@ const GetJob = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setSelectedJob(null);
+        setFile(null); // Resetea el archivo al cerrar el modal
+    };
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]); // Actualiza el estado con el archivo seleccionado
+    };
+
+    const handleDragOver = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const droppedFiles = event.dataTransfer.files;
+        if (droppedFiles && droppedFiles.length > 0) {
+            setFile(droppedFiles[0]); // Establece el archivo arrastrado
+        }
     };
 
     const handleApply = () => {
-        alert(`Te has postulado para el trabajo: ${selectedJob.title}`);
+        if (!file) {
+            alert('Por favor, carga un archivo PDF antes de postular.');
+            return;
+        }
+
+        alert(`Te has postulado para el trabajo: ${selectedJob.title} con el archivo: ${file.name}`);
         handleCloseModal(); // Cerrar el modal después de postular
     };
 
@@ -69,7 +94,11 @@ const GetJob = () => {
 
             {showModal && selectedJob && (
                 <div className="modal" onClick={handleCloseModal}>
-                    <div className="modal-content" style={{ backgroundColor: selectedJob.color }} onClick={(e) => e.stopPropagation()}>
+                    <div
+                        className="modal-content"
+                        style={{ backgroundColor: selectedJob.color }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <span className="close-modal" onClick={handleCloseModal}>&times;</span>
                         <div className="modal-header">
                             <h2 style={{ display: 'inline' }}>{selectedJob.title}</h2>
@@ -89,7 +118,32 @@ const GetJob = () => {
                         </div>
                         <div className="description-separator"></div>
                         <p><strong>Descripción:</strong></p>
-                        <p>{selectedJob.description}</p>
+                        <p className="modal-description">{selectedJob.description}</p>
+
+                        {/* Área de carga con arrastre */}
+                        <div
+                            className="file-upload" 
+                            onDragOver={handleDragOver} 
+                            onDrop={handleDrop}
+                            style={{ 
+                                border: '2px dashed #007bff', 
+                                padding: '20px', 
+                                textAlign: 'center', 
+                                borderRadius: '5px',
+                                marginTop: '20px',
+                                backgroundColor: '#f0f8ff'
+                            }}
+                            onClick={() => document.getElementById('file-input').click()} // Abre el selector de archivos al hacer clic
+                        >
+                            <p>{file ? `Archivo: ${file.name}` : 'Arrastra tu CV en formato PDF aquí o haz clic para seleccionar uno.'}</p>
+                            <input 
+                                type="file" 
+                                accept=".pdf" 
+                                onChange={handleFileChange} 
+                                style={{ display: 'none' }} 
+                                id="file-input" 
+                            />
+                        </div>
                     </div>
                 </div>
             )}
@@ -98,3 +152,4 @@ const GetJob = () => {
 };
 
 export default GetJob;
+
