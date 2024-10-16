@@ -7,11 +7,11 @@ const GetJob = () => {
     const [file, setFile] = useState(null); // Estado para almacenar el archivo cargado
 
     const colors = [
-        '#ffab91', // Color pastel 1
-        '#80deea', // Color pastel 2
-        '#d1c4e9', // Color pastel 3
-        '#ffe0b2', // Color pastel 4
-        '#c5e1a5', // Color pastel 5
+        '#ffab91', 
+        '#80deea', 
+        '#d1c4e9', 
+        '#ffe0b2', 
+        '#c5e1a5', 
     ];
 
     const jobs = Array.from({ length: 4 }, (_, index) => ({
@@ -21,6 +21,7 @@ const GetJob = () => {
         date: '20 Sep, 2024',
         salary: '1000 USD/mes',
         skills: ['Figma', 'Adobe XD'],
+        applicants: 15, // Cantidad de postulados
         color: colors[index % colors.length], // Asigna color pastel de la lista
     }));
 
@@ -70,7 +71,7 @@ const GetJob = () => {
                     <div
                         key={job.id}
                         className="job-card"
-                        style={{ backgroundColor: job.color }} // Aplicar color del trabajo
+                        style={{ backgroundColor: job.color }} 
                         onClick={() => handleJobClick(job)}
                     >
                         <div className="job-card-header">
@@ -85,9 +86,10 @@ const GetJob = () => {
                             ))}
                         </div>
                         <div className="job-footer">
-                            <span className="job-salary">{job.salary}</span>
-                            <button className="btn btn-primary">Detalles</button>
+                            <span className="job-salary" style={{ fontWeight: 'bold' }}>{job.salary}</span>
+                            <span className="job-applicants">Postulados: {job.applicants}</span>
                         </div>
+                        <button className="btn btn-primary">Detalles</button>
                     </div>
                 ))}
             </div>
@@ -100,14 +102,12 @@ const GetJob = () => {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <span className="close-modal" onClick={handleCloseModal}>&times;</span>
-                        <div className="modal-header">
-                            <h2 style={{ display: 'inline' }}>{selectedJob.title}</h2>
-                            <button className="btn-apply" onClick={handleApply}>Postular</button>
+                        <div className="modal-header" style={{ textAlign: 'left' }}>
+                            <p className="job-date">{selectedJob.date}</p> 
                         </div>
-                        <p><strong>Fecha:</strong> {selectedJob.date}</p>
-                        <p><strong>Salario:</strong> {selectedJob.salary}</p>
+                        <h2 style={{ display: 'inline', textAlign: 'left' }}>{selectedJob.title}</h2>
+                        <p style={{ fontWeight: 'bold', textAlign: 'left' }}>{selectedJob.salary}</p> 
                         <div className="modal-skills">
-                            <strong>Habilidades:</strong>
                             <div className="skills-list">
                                 {selectedJob.skills.map((skill, index) => (
                                     <span key={index} className="job-skill-tag">
@@ -116,9 +116,10 @@ const GetJob = () => {
                                 ))}
                             </div>
                         </div>
+                        <div style={{ margin: '10px 0' }}></div> {/* Espacio vacío */}
+                        <div className="job-applicants" style={{ textAlign: 'left' }}>Postulados: {selectedJob.applicants}</div> {/* Cantidad de postulados */}
                         <div className="description-separator"></div>
-                        <p><strong>Descripción:</strong></p>
-                        <p className="modal-description">{selectedJob.description}</p>
+                        <p className="modal-description" style={{ textAlign: 'left' }}>{selectedJob.description}</p> {/* Descripción */}
 
                         {/* Área de carga con arrastre */}
                         <div
@@ -144,6 +145,11 @@ const GetJob = () => {
                                 id="file-input" 
                             />
                         </div>
+
+                        {/* Botón Postular */}
+                        <div style={{ marginTop: '30px' }}> {/* Aumentado el margen superior */}
+                            <button className="btn-apply" onClick={handleApply}>Postular</button>
+                        </div>
                     </div>
                 </div>
             )}
@@ -152,4 +158,3 @@ const GetJob = () => {
 };
 
 export default GetJob;
-

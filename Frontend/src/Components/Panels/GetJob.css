@@ -268,57 +268,62 @@ form {
     border-top: 1px solid #ccc;
     margin: 10px 0;
 }
+
 .modal-footer {
     display: flex;
-    justify-content: flex-end; /* Alinea el botón a la derecha */
-    padding: 15px; /* Espacio alrededor del botón */
+    justify-content: flex-end; 
+    padding: 15px; 
 }
 
 .modal-header {
     display: flex;
-    justify-content: space-between; /* Espaciado entre el título y el botón */
-    align-items: center; /* Centrar verticalmente el contenido */
-    margin-bottom: 15px; /* Espacio debajo del encabezado */
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 15px; 
 }
 
 .btn-apply {
-    background-color: #f4c8c8; /* Color de fondo claro */
-    color: black; /* Color del texto en negro */
+    background-color: #f4c8c8; 
+    color: black; 
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    border: 1px solid #d1a1a1; /* Borde del botón */
+    border: 1px solid #d1a1a1; 
 }
 
 .btn-apply:hover {
-    background-color: #e8a3a3; /* Color de fondo más oscuro al pasar el cursor */
-}
-
-.modal-content {
-    /* Resto de tus estilos aquí */
-    border-radius: 8px; /* Esquinas redondeadas para el contenido del modal */
+    background-color: #e8a3a3; 
 }
 
 .modal-description {
-    background-color: white; /* Color de fondo blanco para la descripción */
-    padding: 15px; /* Espaciado interno */
-    border-radius: 5px; /* Esquinas redondeadas para la descripción */
-    color: #333; /* Color de texto para la descripción */
-    margin-top: 15px; /* Espacio superior para separar de la sección anterior */
+    background-color: white; 
+    padding: 15px; 
+    border-radius: 5px; 
+    color: #333; 
+    margin-top: 15px; 
 }
 
-/* Si necesitas un estilo adicional para la separación */
 .description-separator {
-    height: 1px; /* Altura de la línea */
-    background-color: #ccc; /* Color de la línea */
-    margin: 10px 0; /* Espaciado vertical */
+    height: 1px; 
+    background-color: #ccc; 
+    margin: 10px 0; 
 }
+
 .file-upload {
     transition: background-color 0.3s ease;
 }
 
 .file-upload:hover {
     background-color: #e3f2fd;
+}
+.job-date {
+    padding: 0.25rem 0.5rem; 
+    border-radius: 16px; 
+    font-size: 0.85rem; 
+    background-color: var(--white-color);
+    color: var(--inputs-color);
+    margin-right: 0.5rem; 
+    display: inline-block; 
 }
