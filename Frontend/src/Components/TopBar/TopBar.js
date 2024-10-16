@@ -4,6 +4,7 @@ import { IoMenu, IoClose } from 'react-icons/io5';
 import { IoIosLogOut } from "react-icons/io";
 import './TopBar.css';
 import logo from './UD.png';
+import { useNavigate } from 'react-router-dom';
 
 const TopBar = ({ toggleMenu, menuOpen }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -12,6 +13,7 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
     const [profilePicture, setProfilePicture] = useState('/Profile.svg');
     
     const fileInputRef = useRef(null);
+    const navigate = useNavigate();
 
     const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible);
@@ -24,6 +26,8 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
     const handleLogout = () => {
         localStorage.removeItem('user');
         console.log('logout');
+        navigate('/'); // Redirigir / "/"
+
     };
 
     const closeProfileModal = () => {
