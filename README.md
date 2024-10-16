@@ -1,2 +1,22 @@
-# SEMI1_2S2024_PROYECTO_A_15
-Proyecto del laboratorio del curso de Seminario de Sistemas 1
+`Proyecto 1 del Laboratorio del Curso de Seminario de Sistemas 1`
+
+![HireVision](./Documentación/Hirevision.png)
+
+| Curso                   | Sección |
+| ----------------------- | ------- |
+| Seminario de Sistemas I | A       |
+
+### Integrantes ✨
+
+| #   | Nombre                                                                    | Carnet    |
+| --- | ------------------------------------------------------------------------- | --------- |
+| 1   | [Rivaldo Alexander Tojín Ixcotoyac](https://github.com/rivalTj7)          | 201900956 |
+| 2   | [Kevin Estuardo Palacios Quiñonez](https://github.com/KevinPalaciosQ)     | 201902278 |
+| 3   | [Robin Omar Buezo Díaz](https://github.com/robinbuezo11)                  | 201944994 |
+| 4   | [Brandon Andy Jefferson Tejaxún Pichiyá](https://github.com/brandonT2002) | 202112030 |
+
+# Manuales 📖
+
+[Manual de Usuario👤](./Documentación/ManualUsuario.md)
+
+[Manual Técnico🔧](./Documentación/ManualTecnico.md)
