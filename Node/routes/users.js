@@ -51,7 +51,7 @@ const authenticateJWT = (req, res, next) => {
 
 router.post('/signup', async (req, res) => {
     const { first_name, last_name, email, birth_date, password, picture } = req.body;
-    
+
     if (!first_name || !last_name || !email || !birth_date || !password || !picture) {
         return res.status(400).json({ err: 'Missing required fields' });
     }
@@ -76,12 +76,6 @@ router.post('/signup', async (req, res) => {
         const s3Data = await s3.upload(params).promise();
         const pictureUrl = s3Data.Location;
 
-        const user = {
-            first_name,
-            last_name,
-            email,
-            birth_date,
-        };
         const query = 'INSERT INTO USUARIO (NOMBRE, APELLIDO, CORREO, FECHA_NACIMIENTO, FOTO) VALUES (?, ?, ?, ?, ?)';
         await db.query(query, [first_name, last_name, email, birth_date, pictureUrl]);
         res.json(data);
@@ -136,6 +130,7 @@ router.post('/signin', async (req, res) => {
             email: row[0].CORREO,
             birth_date: row[0].FECHA_NACIMIENTO,
             picture: row[0].FOTO,
+            admin: row[0].ADMIN,
         }
         res.json({ idToken, accessToken, user });
     } catch (err) {
@@ -163,6 +158,31 @@ router.post('/signout', authenticateJWT, (req, res) => {
             res.json({ message: 'Successfully signed out!' });
         }
     });
+});
+
+router.post('/upload-cv', authenticateJWT, async (req, res) => {
+    const { email, cv } = req.body;
+
+    const cvBuffer = Buffer.from(cv.replace(/^data:application\/\w+;base64,/, ''), 'base64');
+    const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `cv/${email}-${Date.now()}.pdf`,
+        Body: cvBuffer,
+        ContentType: 'application/pdf',
+    };
+
+    try {
+        const data = await s3.upload(params).promise();
+        const cvUrl = data.Location;
+
+        const query = 'UPDATE USUARIO SET CV = ? WHERE CORREO = ?';
+        await db.query(query, [cvUrl, email]);
+
+        res.json(data);
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ err: err.message });
+    }
 });
 
 module.exports = router;

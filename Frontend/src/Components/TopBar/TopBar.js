@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { FaSearch, FaUser } from 'react-icons/fa';
 import { IoMenu, IoClose } from 'react-icons/io5';
 import { IoIosLogOut } from "react-icons/io";
+import Swal from 'sweetalert2';
 import './TopBar.css';
 import logo from './UD.png';
 import { useNavigate } from 'react-router-dom';
@@ -24,10 +25,33 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('user');
-        console.log('logout');
-        navigate('/'); // Redirigir / "/"
+        const accessToken = localStorage.getItem('accessToken');
+        const idToken = localStorage.getItem('idToken');
 
+        fetch(process.env.REACT_APP_API_URL + '/users/signout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({ accessToken }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.err) {
+                Swal.fire({
+                    title: '¡Error!',
+                    text: data.err,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            } else {
+                localStorage.removeItem('idToken');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('user');
+                navigate('/'); // Redirigir / "/"
+            }
+        });
     };
 
     const closeProfileModal = () => {

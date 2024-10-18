@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import './Signup.css';
 
 const Signup = () => {
@@ -20,6 +21,7 @@ const Signup = () => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result);
+                setPicture(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -32,13 +34,33 @@ const Signup = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (!first_name || !last_name || !email || !birth_date || !password || !picture) {
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Por favor, llena todos los campos',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Las contraseñas no coinciden',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        }
+
         fetch(process.env.REACT_APP_API_URL + '/users/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                first_namme: first_name,
+                first_name: first_name,
                 last_name: last_name,
                 email: email,
                 birth_date: birth_date,
@@ -46,13 +68,34 @@ const Signup = () => {
                 picture: picture
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.error(data.error);
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.err) {
+                Swal.fire({
+                    title: '¡Error!',
+                    text: data.err,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+            } else {
+                Swal.fire({
+                    title: '¡Registro Exitoso!',
+                    text: 'Por favor, revisa tu correo para confirmar tu cuenta',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                }).then(() => {
+                    navigate('/');
+                });
             }
         })
-        .catch(error => console.error('Error:', error))
+        .catch((err) => {
+            Swal.fire({
+                title: '¡Error!',
+                text: err.message,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+        });
     }
 
     return (
@@ -93,7 +136,7 @@ const Signup = () => {
                     <label htmlFor='password'>Contraseña</label>
                 </div>
                 <div className="form-group">
-                    <input type='password' id='confirm-password' name='confirm-password' required placeholder=" " />
+                    <input type='password' id='confirm-password' name='confirm-password' required placeholder=" " value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
                     <label htmlFor='confirm-password'>Confirmar Contraseña</label>
                 </div>
                 <button type='submit' className='full-width' onClick={handleSubmit}>Crear Cuenta</button>

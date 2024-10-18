@@ -18,7 +18,7 @@ const User = () => {
         const user = JSON.parse(localStorage.getItem('user'));
 
         // Verifica si el usuario está logueado y es admin
-        if (!user || user.role !== 'user') {
+        if (!user || user.admin == 1) {
             navigate('/');
         }
     }, [navigate]);
