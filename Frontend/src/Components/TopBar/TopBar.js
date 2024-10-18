@@ -207,7 +207,7 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                                         <label htmlFor='confirm-password'>Confirmar Contraseña</label>
                                     </div>
                                     <button type='button' className='form-group1' onClick={handleSaveChanges}>Guardar Cambios</button>
-                                    <button type='button' className='form-group1' >Postular</button>      
+                                    <button type='button' className='form-group1' >Enviar CV</button>      
                                 </form>
                                 <div>
             <input
