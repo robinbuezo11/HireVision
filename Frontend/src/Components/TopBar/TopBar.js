@@ -12,7 +12,8 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isEditProfile, setIsEditProfile] = useState(false);
     const [profilePicture, setProfilePicture] = useState('/Profile.svg');
-    
+    const [selectedFile, setSelectedFile] = useState(null); 
+
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
 
@@ -82,7 +83,20 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
         console.log('Cambios guardados');
         closeProfileModal();
     };
-
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+    const handleClick = () => {
+        fileInputRef.current.click(); // Abre el selector de archivos
+    };
+    const handleDragOver = (event) => {
+        event.preventDefault(); // Previene el comportamiento por defecto
+    };
+    const handleDrop = (event) => {
+        event.preventDefault(); // Previene el comportamiento por defecto
+        const file = event.dataTransfer.files[0]; // Obtiene el archivo arrastrado
+        setSelectedFile(file);
+    };
     return (
         <div className='topBar'>
             <div className='topBar-header'>
@@ -192,8 +206,43 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                                         <input type='password' id='confirm-password' name='confirm-password' required placeholder=" " />
                                         <label htmlFor='confirm-password'>Confirmar Contraseña</label>
                                     </div>
-                                    <button type='button' className='full-width' onClick={handleSaveChanges}>Guardar Cambios</button>
+                                    <button type='button' className='form-group1' onClick={handleSaveChanges}>Guardar Cambios</button>
+                                    <button type='button' className='form-group1' >Postular</button>      
                                 </form>
+                                <div>
+            <input
+                type="file"
+                ref={fileInputRef}
+                accept=".pdf"
+                onChange={handleFileChange}
+                style={{ display: 'none' }} // Oculta el input de archivo
+            />
+            <div
+                onClick={handleClick}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                style={{
+                    border: '2px dashed #007bff', 
+                    padding: '20px', 
+                    borderRadius: '5px', 
+                    backgroundColor: '#f8f9fa', 
+                    color: '#343a40', 
+                    cursor: 'pointer', 
+                    textAlign: 'center', 
+                    transition: 'background-color 0.3s, border-color 0.3s', 
+                }}
+                onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e2e6ea';
+                    e.currentTarget.style.borderColor = '#0056b3';
+                }}
+                onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f8f9fa'; // Restaura el fondo
+                    e.currentTarget.style.borderColor = '#007bff'; // Restaura el borde
+                }}
+            >
+                {selectedFile ? selectedFile.name : 'Arrastra tu archivo aquí o haz clic para seleccionar'}
+            </div>
+        </div>
                             </>
                         )}
                     </div>
