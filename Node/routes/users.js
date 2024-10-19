@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const AWS = require('aws-sdk');
 const jwt = require('jsonwebtoken');
+const imageProccesor = require('../utils/analyzer.txt');
 const jwksClient = require('jwks-rsa');
 
 const db = require('../utils/db');
@@ -164,5 +165,66 @@ router.post('/signout', authenticateJWT, (req, res) => {
         }
     });
 });
+
+router.post('/analyzeText', async (req, res) => {
+    try {
+        const { imagen } = req.body;
+        if (!imagen) {
+            return res.status(400).json({ message: 'Imagen no proporcionada' });
+        }
+
+        const imageBuffer = Buffer.from(imagen.replace(/^data:image\/\w+;base64,/, ''), 'base64');
+        if (!imageBuffer) {
+            return res.status(400).json({ message: 'Error al procesar la imagen' });
+        }
+
+        const labels = await imageProccesor.extractText(imageBuffer);
+
+        const tags = extractTags(labels);
+        res.json({ labels, tags });
+    } catch (err) {
+        console.error('Error al analizar la imagen:', err);
+        res.status(500).json({ error: err.message, message: 'Error en el servidor' });
+    }
+    console.log('POST /analyzeImage');
+});
+
+function extractTags(detectedTexts) {
+    const keywords = [
+        'JavaScript', 'AWS', 'React', 'Python', 'Node.js', 'Java', 'C#', 'C++', 'TypeScript',
+        'HTML', 'CSS', 'SQL', 'NoSQL', 'MongoDB', 'MySQL', 'PostgreSQL', 'Docker', 'Kubernetes',
+        'Git', 'GitHub', 'Bitbucket', 'Agile', 'Scrum', 'JIRA', 'CI/CD', 'Azure', 'GCP', 'Linux',
+        'Windows', 'Machine Learning', 'Data Science', 'TensorFlow', 'Keras', 'PyTorch', 
+        'Natural Language Processing', 'Computer Vision', 'AWS Lambda', 'S3', 'EC2', 'DynamoDB', 
+        'Express', 'Flask', 'Django', 'Spring', 'Hibernate', 'REST API', 'GraphQL', 'SOAP', 
+        'Microservices', 'Cloud', 'Blockchain', 'Cryptography', 'Data Mining', 'Big Data', 'Hadoop',
+        'Spark', 'Kotlin', 'Swift', 'Objective-C', 'Flutter', 'Android', 'iOS', 'Xcode', 
+        'Visual Studio Code', 'Eclipse', 'IntelliJ', 'TDD', 'BDD', 'Unit Testing', 'Jest', 'Mocha',
+        'Chai', 'Selenium', 'Cypress', 'Automation', 'DevOps', 'Terraform', 'Ansible', 'Chef', 'Puppet'
+    ];
+
+    const lowerCaseTexts = detectedTexts.map(text => text.toLowerCase());
+
+    const matchingTags = keywords.filter(keyword => 
+        lowerCaseTexts.some(text => text.includes(keyword.toLowerCase()))
+    );
+
+    const minTags = 5;
+    const maxTags = 7;
+    const numTags = Math.min(Math.max(matchingTags.length, minTags), maxTags);
+
+    const selectedTags = shuffleArray(matchingTags).slice(0, numTags);
+
+    return selectedTags;
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 
 module.exports = router;
