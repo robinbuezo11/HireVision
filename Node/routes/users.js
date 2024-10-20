@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const AWS = require('aws-sdk');
 const jwt = require('jsonwebtoken');
+const pdf = require('pdf-parse');
 const imageProccesor = require('../utils/analyzer.txt');
+const textToSpeech = require('../utils/analyzer.audio');
 const jwksClient = require('jwks-rsa');
 
 const db = require('../utils/db');
@@ -166,7 +168,7 @@ router.post('/signout', authenticateJWT, (req, res) => {
     });
 });
 
-router.post('/analyzeText', async (req, res) => {
+router.post('/analyzeText', authenticateJWT, async (req, res) => {
     try {
         const { imagen } = req.body;
         if (!imagen) {
@@ -187,6 +189,60 @@ router.post('/analyzeText', async (req, res) => {
         res.status(500).json({ error: err.message, message: 'Error en el servidor' });
     }
     console.log('POST /analyzeImage');
+});
+
+router.post('/playAudio', authenticateJWT, async (req, res) => {
+    const { userId } = req.body;
+    
+    if (!userId) {
+        return res.status(400).json({ err: 'User ID is required' });
+    }
+
+    try {
+        const query = 'SELECT CV FROM USUARIO WHERE ID = ?';
+        const [rows] = await db.query(query, [userId]);
+
+        if (rows.length === 0 || !rows[0].CV) {
+            return res.status(404).json({ err: 'User or CV not found' });
+        }
+
+        const cvPath = rows[0].CV;
+
+        const s3Params = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: cvPath,
+        };
+
+        s3.getObject(s3Params, async (err, data) => {
+            if (err) {
+                console.log('Error fetching CV from S3:', err);
+                return res.status(500).json({ err: 'Error fetching CV from S3' });
+            }
+
+            const pdfBuffer = data.Body;
+
+            try {
+
+                const pdfData = await pdf(pdfBuffer);
+                const text = pdfData.text;
+
+                if (!text) {
+                    return res.status(400).json({ err: 'No text found in PDF' });
+                }
+
+                const audioData = await textToSpeech(text);
+
+                res.setHeader('Content-Type', 'audio/mpeg');
+                res.send(audioData.AudioStream);
+            } catch (err) {
+                console.error('Error processing PDF or generating speech:', err);
+                return res.status(500).json({ err: 'Error processing PDF or generating speech' });
+            }
+        });
+    } catch (err) {
+        console.error('Error en la ruta /playAudio:', err);
+        res.status(500).json({ err: 'Internal server error' });
+    }
 });
 
 function extractTags(detectedTexts) {
