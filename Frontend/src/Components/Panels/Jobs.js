@@ -2,9 +2,27 @@ import React, { useState, useEffect } from 'react';
 import './Jobs.css';
 import JobForm from './JobForm';
 
+const JobDetailsModal = ({ job, onClose }) => {
+    return (
+        <div className="modal">
+            <div className="modal-content">
+                <span className="close-btn" onClick={onClose}>&times;</span>
+                <h2 className="title-modal">Detalles del Puesto</h2>
+                <h3>{job.puesto}</h3>
+                <p><strong>Salario:</strong> {job.salario} Q/mes</p>
+                <p><strong>Fecha de Creación:</strong> {job.fecha_creacion}</p>
+                <p><strong>Habilidades:</strong> {job.habilidades}</p>
+                <p><strong>Descripción:</strong> {job.descripcion}</p>
+            </div>
+        </div>
+    );
+};
+
 const Jobs = () => {
     const [jobs, setJobs] = useState([]);
-    const [showModal, setShowModal] = useState(false);
+    const [showJobModal, setShowJobModal] = useState(false);
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
+    const [selectedJob, setSelectedJob] = useState(null);
 
     const fetchJobs = async () => {
         try {
@@ -21,18 +39,29 @@ const Jobs = () => {
     }, []);
 
     const handleNewJobClick = () => {
-        setShowModal(true);
+        setShowJobModal(true);
     };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
+    const handleCloseJobModal = () => {
+        setShowJobModal(false);
+        window.location.reload();
+    };
+
+    const handleDetailsClick = (job) => {
+        setSelectedJob(job);
+        setShowDetailsModal(true);
+    };
+
+    const handleCloseDetailsModal = () => {
+        setShowDetailsModal(false);
+        setSelectedJob(null);
     };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toISOString().split('T')[0];
     };
-    
+
     return (
         <div className="jobs-container">
             <div className="jobs-header">
@@ -40,7 +69,7 @@ const Jobs = () => {
                     Nuevo Puesto
                 </button>
             </div>
-    
+
             <div className="jobs-grid">
                 {jobs.length > 0 ? (
                     jobs.map((job) => (
@@ -52,6 +81,7 @@ const Jobs = () => {
                             <div className="job-skills">
                                 {job.habilidades
                                     .split(',')
+                                    .slice(0, 5)
                                     .map((skill, index) => (
                                         <span key={index} className="job-skill-tag">
                                             {skill}
@@ -60,7 +90,9 @@ const Jobs = () => {
                             </div>
                             <div className="job-footer">
                                 <span className="job-salary">{job.salario} Q/mes</span>
-                                <button className="btn btn-primary">Detalles</button>
+                                <button className="btn btn-primary" onClick={() => handleDetailsClick(job)}>
+                                    Detalles
+                                </button>
                             </div>
                         </div>
                     ))
@@ -68,17 +100,19 @@ const Jobs = () => {
                     <p>No hay empleos disponibles.</p>
                 )}
             </div>
-    
-            {showModal && (
+
+            {showJobModal && (
                 <div className="modal">
                     <div className="modal-content">
-                        <span className="close-btn" onClick={handleCloseModal}>
-                            &times;
-                        </span>
+                        <span className="close-btn" onClick={handleCloseJobModal}>&times;</span>
                         <h2 className="title-modal">Nuevo Puesto</h2>
-                        <JobForm handleCloseModal={handleCloseModal} />
+                        <JobForm handleCloseModal={handleCloseJobModal} />
                     </div>
                 </div>
+            )}
+
+            {showDetailsModal && selectedJob && (
+                <JobDetailsModal job={selectedJob} onClose={handleCloseDetailsModal} />
             )}
         </div>
     );
