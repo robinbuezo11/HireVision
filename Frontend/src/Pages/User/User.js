@@ -38,7 +38,7 @@ const User = () => {
             <div className='main'>
                 <Menu isOpen={menuOpen} onPanelChange={handlePanelChange} />
                 <div className='panel-section'>
-                  {activePanel === 'jobs' ? <Jobs /> : <Postulates />}
+                    {activePanel === 'jobs' ? <Jobs /> : <Postulates />}
                 </div>
             </div>
         </div>

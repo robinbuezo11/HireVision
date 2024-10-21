@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './Signup.css';
 
 const Signup = () => {
@@ -11,8 +12,10 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [birth_date, setBirth_date] = useState('');
     const [password, setPassword] = useState('');
-    const [picture, setPicture] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [picture, setPicture] = useState('');
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
     // imagen previsualizada
     const handleImageChange = (e) => {
@@ -84,7 +87,7 @@ const Signup = () => {
                     icon: 'success',
                     confirmButtonText: 'Ok'
                 }).then(() => {
-                    navigate('/');
+                    navigate('/Confirm', { state: { email } });
                 });
             }
         })
@@ -101,7 +104,7 @@ const Signup = () => {
     return (
         <div className='container'>
             <h1>¡Regístrate en HireVision!</h1>
-            <div className="file-upload" onClick={triggerFileInput}>
+            <div className="photo-upload" onClick={triggerFileInput}>
                 <div className="image-preview-container">
                     <img src={imagePreview || 'https://via.placeholder.com/150'} alt="Foto de perfil" className="image-preview" />
                 </div>
@@ -131,14 +134,46 @@ const Signup = () => {
                     <input type='date' id='birthdate' name='birthdate' required placeholder=" " value={birth_date} onChange={(e) => setBirth_date(e.target.value)}/>
                     <label htmlFor='birthdate'>Fecha de Nacimiento</label>
                 </div>
-                <div className="form-group">
-                    <input type='password' id='password' name='password' required placeholder=" " value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <div className="form-group password-group">
+                    <input 
+                        type={passwordVisible ? 'text' : 'password'}
+                        id='password' 
+                        name='password' 
+                        required 
+                        placeholder=" " 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                     <label htmlFor='password'>Contraseña</label>
+                    <span 
+                        className="toggle-visibility"
+                        onClick={() => setPasswordVisible(!passwordVisible)}
+                    >
+                        {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                    <div className="password-requirements">
+                        <p>La contraseña debe tener al menos 8 caracteres y contener una letra mayúscula, una minúscula, un número y un caracter especial</p>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <input type='password' id='confirm-password' name='confirm-password' required placeholder=" " value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                <div className="form-group password-group">
+                    <input 
+                        type={confirmPasswordVisible ? 'text' : 'password'}
+                        id='confirm-password' 
+                        name='confirm-password' 
+                        required 
+                        placeholder=" " 
+                        value={confirmPassword} 
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
                     <label htmlFor='confirm-password'>Confirmar Contraseña</label>
+                    <span 
+                        className="toggle-visibility"
+                        onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+                    >
+                        {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                    </span>
                 </div>
+
                 <button type='submit' className='full-width' onClick={handleSubmit}>Crear Cuenta</button>
             </form>
             <p className='login-signup'>¿Ya tienes una cuenta? <span className='navigate' onClick={() => navigate('/')}>Inicia Sesión aquí</span></p>
