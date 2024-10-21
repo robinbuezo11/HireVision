@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import './JobApplications.css';
 
@@ -34,47 +34,44 @@ const DonutChart = ({ percentage }) => {
     );
 };
 
-
 const JobApplications = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedApplication, setSelectedApplication] = useState(null);
+    const [applications, setApplications] = useState([]);
 
-    const applications = [
-        {
-            puesto: 'Senior UX/UI Designer',
-            postulado: 'Brandon Tejaxún',
-            salario: 1500,
-            estado: 'Pendiente',
-            fecha: '15/09/2024',
-        },
-        {
-            puesto: 'Consultor de Ciberseguridad',
-            postulado: 'Brandon Tejaxún',
-            salario: 1500,
-            estado: 'Rechazado',
-            fecha: '15/09/2024',
-        },
-        {
-            puesto: 'Junior Python Developer',
-            postulado: 'Brandon Tejaxún',
-            salario: 1500,
-            estado: 'Aceptado',
-            fecha: '15/09/2024',
-        },
-    ];
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        });
+    };
 
-    const getStatusClass = (estado) => {
-        switch (estado) {
-            case 'Pendiente':
-                return 'status-pending';
-            case 'Rechazado':
-                return 'status-rejected';
-            case 'Aceptado':
-                return 'status-accepted';
-            default:
-                return '';
+    const fetchApplications = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/jobs/postulates`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('idToken')}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (!response.ok) {
+                throw new Error('Error fetching applications');
+            }
+            
+            const data = await response.json();
+            setApplications(data);
+        } catch (error) {
+            console.error('Error fetching applications:', error);
         }
     };
+
+    useEffect(() => {
+        fetchApplications();
+    }, []);
 
     const openModal = (application) => {
         setSelectedApplication(application);
@@ -95,7 +92,6 @@ const JobApplications = () => {
                         <th>Puesto</th>
                         <th>Postulado</th>
                         <th>Salario</th>
-                        <th>Estado</th>
                         <th>Fecha de envío</th>
                         <th>Perfil</th>
                     </tr>
@@ -103,15 +99,10 @@ const JobApplications = () => {
                 <tbody>
                     {applications.map((app, index) => (
                         <tr key={index}>
-                            <td>{app.puesto}</td>
-                            <td>{app.postulado}</td>
-                            <td>Q{app.salario}</td>
-                            <td>
-                                <span className={`status ${getStatusClass(app.estado)}`}>
-                                    {app.estado}
-                                </span>
-                            </td>
-                            <td>{app.fecha}</td>
+                            <td>{app.PUESTO}</td>
+                            <td>{app.POSTULADO}</td>
+                            <td>Q{app.SALARIO}</td>
+                            <td>{formatDate(app.FECHA_CREACION)}</td>
                             <td>
                                 <a onClick={() => openModal(app)}>Ver Perfil</a>
                             </td>
@@ -129,16 +120,19 @@ const JobApplications = () => {
                         <div className="profile-cv">
                             <div className="profile-section">
                                 <img
-                                    src="./Profile.svg"
+                                    src={
+                                        selectedApplication.FOTO 
+                                        ? selectedApplication.FOTO 
+                                        : "./Profile.svg"
+                                    }
                                     alt="Profile"
                                     className="profile-image-cv"
                                 />
-                                <div class="graph-container">
+                                <div className="graph-container">
                                     <DonutChart percentage={25} />
-                                    <div class="percentage">25%</div>
                                 </div>
                             </div>
-                            <h2>{selectedApplication.postulado}</h2>
+                            <h2>{selectedApplication.POSTULADO}</h2>
                             <div className="skills">
                                 <span>Python</span>
                                 <span>JavaScript</span>
@@ -146,11 +140,6 @@ const JobApplications = () => {
                                 <span>Docker</span>
                             </div>
                             <div className="download-section">
-                                <select className="format-select">
-                                    <option value="Pendiente" selected="true" disabled>Pendiente</option>
-                                    <option value="Aceptado">Aceptado</option>
-                                    <option value="Rechazado">Rechazado</option>
-                                </select>
                                 <button className="download-cv">
                                     Descargar CV
                                 </button>

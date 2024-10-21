@@ -87,4 +87,29 @@ router.post('/apply', authenticateJWT, async (req, res) => {
     console.log('POST /jobs/apply');
 });
 
+router.get('/postulates', authenticateJWT, async (req, res) => {
+    const query = `
+        SELECT 
+            E.PUESTO,
+            CONCAT(U.NOMBRE, ' ', U.APELLIDO) AS POSTULADO,
+            U.FOTO AS FOTO,
+            E.SALARIO,
+            P.FECHA_POSTULACION AS FECHA_CREACION
+        FROM 
+            POSTULACION P
+        JOIN 
+            USUARIO U ON P.ID_USUARIO = U.ID
+        JOIN 
+            EMPLEO E ON P.ID_EMPLEO = E.ID
+    `;
+
+    try {
+        const [results] = await db.query(query);
+        res.json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 module.exports = router;
