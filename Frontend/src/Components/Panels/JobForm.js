@@ -76,7 +76,7 @@ const JobForm = ({ handleCloseModal }) => {
                     icon: 'success',
                     confirmButtonText: 'Ok'
                 }).then(() => {
-                    handleCloseModal();
+                    handleCloseModal(true);
                 });
             }
         })

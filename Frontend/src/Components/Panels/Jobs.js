@@ -3,16 +3,35 @@ import './Jobs.css';
 import JobForm from './JobForm';
 
 const JobDetailsModal = ({ job, onClose }) => {
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        });
+    };
+
     return (
         <div className="modal">
             <div className="modal-content">
                 <span className="close-btn" onClick={onClose}>&times;</span>
-                <h2 className="title-modal">Detalles del Puesto</h2>
-                <h3>{job.puesto}</h3>
-                <p><strong>Salario:</strong> {job.salario} Q/mes</p>
-                <p><strong>Fecha de Creación:</strong> {job.fecha_creacion}</p>
-                <p><strong>Habilidades:</strong> {job.habilidades}</p>
-                <p><strong>Descripción:</strong> <span dangerouslySetInnerHTML={{ __html: job.descripcion }}></span></p>
+                <div className="modal-header">
+                    <h1>{job.puesto}</h1>
+                </div>
+                <div className="modal-body">
+                    <p>{ formatDate(job.fecha_creacion) }</p>
+                    <p>{job.salario} Q/mes</p>
+                    <div className="skills-container">
+                        {job.habilidades.split(',').map((skill, index) => (
+                            <span key={index} className="job-skill-tag">
+                                {skill.trim()}
+                            </span>
+                        ))}
+                    </div>
+                    <div className="job-description" 
+                        dangerouslySetInnerHTML={{ __html: job.descripcion }} />
+                </div>
             </div>
         </div>
     );
@@ -47,9 +66,11 @@ const Jobs = () => {
         setShowJobModal(true);
     };
 
-    const handleCloseJobModal = () => {
+    const handleCloseJobModal = (created = false) => {
         setShowJobModal(false);
-        window.location.reload();
+        if (created) {
+            fetchJobs();
+        }
     };
 
     const handleDetailsClick = (job) => {
@@ -64,7 +85,11 @@ const Jobs = () => {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toISOString().split('T')[0];
+        return date.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        });
     };
 
     return (
