@@ -15,7 +15,7 @@ const JobDetailsModal = ({ job, onClose }) => {
     return (
         <div className="modal">
             <div className="modal-content">
-                <span className="close-btn" onClick={onClose}>&times;</span>
+                <span className="close" onClick={onClose}>&times;</span>
                 <div className="modal-header">
                     <h1>{job.puesto}</h1>
                 </div>
@@ -134,7 +134,7 @@ const Jobs = () => {
             {showJobModal && (
                 <div className="modal">
                     <div className="modal-content">
-                        <span className="close-btn" onClick={handleCloseJobModal}>&times;</span>
+                        <span className="close" onClick={handleCloseJobModal}>&times;</span>
                         <h2 className="title-modal">Nuevo Puesto</h2>
                         <JobForm handleCloseModal={handleCloseJobModal} />
                     </div>

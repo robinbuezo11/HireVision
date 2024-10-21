@@ -140,9 +140,18 @@ const JobApplications = () => {
                                 <span>Docker</span>
                             </div>
                             <div className="download-section">
-                                <button className="download-cv">
-                                    Descargar CV
-                                </button>
+                            <button 
+                                className="download-cv"
+                                onClick={() => {
+                                    if (selectedApplication.FOTO) {
+                                        window.open(selectedApplication.CV, '_blank');
+                                    } else {
+                                        alert('No hay CV disponible');
+                                    }
+                                }}
+                            >
+                                Ver CV
+                            </button>
                             </div>
                         </div>
                     </div>
