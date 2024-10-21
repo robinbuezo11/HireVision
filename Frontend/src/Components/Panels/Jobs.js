@@ -60,7 +60,7 @@ const Jobs = () => {
                             &times;
                         </span>
                         <h2 className='title-modal'>Nuevo Puesto</h2>
-                        <JobForm />
+                        <JobForm handleCloseModal={handleCloseModal} />
                     </div>
                 </div>
             )}
