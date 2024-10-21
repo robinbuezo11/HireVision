@@ -3,6 +3,7 @@ const router = express.Router();
 const AWS = require('aws-sdk');
 const jwt = require('jsonwebtoken');
 const pdf = require('pdf-parse');
+const translateText = require('../utils/translate.text');
 const imageProccesor = require('../utils/analyzer.txt');
 const textToSpeech = require('../utils/analyzer.audio');
 const jwksClient = require('jwks-rsa');
@@ -244,7 +245,19 @@ router.post('/playAudio', authenticateJWT, async (req, res) => {
         res.status(500).json({ err: 'Internal server error' });
     }
 });
-
+router.post('/translateText', async (req, res) => {
+    try{
+        const { text, targetLanguage } = req.body;
+        if (!text || !targetLanguage) {
+            return res.status(400).json({ message: 'Faltan campos obligatorios' });
+        }
+        const translatedText = await translateText(text, targetLanguage);
+        res.json({ translatedText });
+    }catch(err){
+        console.error('Error al traducir el texto:', err);
+        res.status(500).json({ error: err.message, message: 'Error en el servidor' });
+    }
+});
 function extractTags(detectedTexts) {
     const keywords = [
         'JavaScript', 'AWS', 'React', 'Python', 'Node.js', 'Java', 'C#', 'C++', 'TypeScript',
