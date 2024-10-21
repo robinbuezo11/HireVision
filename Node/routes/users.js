@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const AWS = require('aws-sdk');
-const jwt = require('jsonwebtoken');
 const pdf = require('pdf-parse');
 const translateText = require('../utils/translate.text');
 const imageProccesor = require('../utils/analyzer.txt');
 const textToSpeech = require('../utils/analyzer.audio');
-const jwksClient = require('jwks-rsa');
 
 const db = require('../utils/db');
+const authenticateJWT = require('../utils/authJWT');
 
 require('dotenv').config();
 
@@ -18,40 +17,6 @@ const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
-
-const client = jwksClient({
-    jwksUri: `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_USER_POOL_ID}/.well-known/jwks.json`,
-});
-
-function getKey(header, callback) {
-    client.getSigningKey(header.kid, (err, key) => {
-        const signingKey = key.publicKey || key.rsaPublicKey;
-        callback(null, signingKey);
-    });
-}
-
-const authenticateJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-        return res.status(401).json({ err: 'Authorization header not found' });
-    }
-
-    const token = authHeader.split(' ')[1];
-
-    if (token) {
-        jwt.verify(token, getKey, {}, (err, user) => {
-            if (err) {
-                return res.status(403).json({ err: 'Invalid token' });
-            }
-
-            req.user = user;
-            next();
-        });
-    } else {
-        res.status(401).json({ err: 'Token not found' });
-    }
-};
 
 router.post('/signup', async (req, res) => {
     const { first_name, last_name, email, birth_date, password, picture } = req.body;
@@ -132,6 +97,7 @@ router.post('/signin', async (req, res) => {
             throw new Error('User not found in database');
         }
         const user = {
+            id: row[0].ID,
             first_name: row[0].NOMBRE,
             last_name: row[0].APELLIDO,
             email: row[0].CORREO,

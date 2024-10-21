@@ -12,7 +12,7 @@ const JobDetailsModal = ({ job, onClose }) => {
                 <p><strong>Salario:</strong> {job.salario} Q/mes</p>
                 <p><strong>Fecha de Creación:</strong> {job.fecha_creacion}</p>
                 <p><strong>Habilidades:</strong> {job.habilidades}</p>
-                <p><strong>Descripción:</strong> {job.descripcion}</p>
+                <p><strong>Descripción:</strong> <span dangerouslySetInnerHTML={{ __html: job.descripcion }}></span></p>
             </div>
         </div>
     );
@@ -26,7 +26,12 @@ const Jobs = () => {
 
     const fetchJobs = async () => {
         try {
-            const response = await fetch(process.env.REACT_APP_API_URL + '/admin/jobs');
+            const response = await fetch(process.env.REACT_APP_API_URL + '/jobs', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('idToken')}`,
+                },
+            });
             const data = await response.json();
             setJobs(data);
         } catch (error) {

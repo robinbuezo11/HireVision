@@ -47,10 +47,11 @@ const JobForm = ({ handleCloseModal }) => {
             return;
         }
 
-        fetch(process.env.REACT_APP_API_URL + '/admin/create', {
+        fetch(process.env.REACT_APP_API_URL + '/jobs/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('idToken')}`
             },
             body: JSON.stringify({
                 puesto: puesto,
