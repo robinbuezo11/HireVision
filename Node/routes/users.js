@@ -97,7 +97,10 @@ router.post('/confirm', (req, res) => {
     cognito.confirmSignUp(params, (err, data) => {
         if (err) {
             console.log(err);
-            res.status(400).json({ err: err.message });
+            if (err.code === 'LimitExceededException') {
+                return res.status(429).json({ err: 'Too many attempts. Please try again later.' });
+            }
+            return res.status(400).json({ err: err.message });
         } else {
             res.json(data);
         }

@@ -25,7 +25,6 @@ const Confirm = () => {
             }
 
             if (newValues.join('').length === 6 && newValues[5] !== '') {
-                console.log(newValues)
                 handleSubmit(newValues.join(''));
             }
         }
@@ -62,12 +61,21 @@ const Confirm = () => {
         .then((res) => res.json())
         .then((data) => {
             if (data.err) {
-                Swal.fire({
-                    title: '¡Error!',
-                    text: 'Ingrese un código válido',
-                    icon: 'error',
-                    confirmButtonText: 'Ok'
-                });
+                if (data.err === 'Too many attempts. Please try again later.') {
+                    Swal.fire({
+                        title: '¡Error!',
+                        text: 'Has superado el número de intentos permitidos. Por favor, espera un momento antes de volver a intentar.',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                } else {
+                    Swal.fire({
+                        title: '¡Error!',
+                        text: 'Ingrese un código válido',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                }
                 return;
             } else {
                 Swal.fire({
@@ -76,7 +84,7 @@ const Confirm = () => {
                     icon: 'success',
                     confirmButtonText: 'Ok'
                 }).then(() => {
-                    navigate('/Confirm', { state: { email } });
+                    navigate('/');
                 });
             }
         })
