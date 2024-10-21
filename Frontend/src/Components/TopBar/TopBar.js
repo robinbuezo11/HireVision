@@ -14,6 +14,8 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
     const [profilePicture, setProfilePicture] = useState('/Profile.svg');
     const [selectedFile, setSelectedFile] = useState(null);
     const [user, setUser] = useState(null);
+
+
     
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -132,7 +134,9 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                 {
                     dropdownVisible && (
                         <div className='panel-profile'>
-                            <p className='option' onClick={handleViewProfile}> <FaUser /> Mi perfil</p>
+                            {!(user.first_name === 'admin' && user.last_name === 'admin') && (
+                                <p className='option' onClick={handleViewProfile}> <FaUser /> Mi perfil</p>
+                            )}
                             <p className='option logout' onClick={handleLogout}> <IoIosLogOut /> Salir</p>
                         </div>
                     )
