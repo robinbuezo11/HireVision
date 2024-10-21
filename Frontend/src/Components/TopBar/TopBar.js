@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaSearch, FaUser } from 'react-icons/fa';
 import { IoMenu, IoClose } from 'react-icons/io5';
 import { IoIosLogOut } from "react-icons/io";
@@ -12,7 +12,16 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isEditProfile, setIsEditProfile] = useState(false);
     const [profilePicture, setProfilePicture] = useState('/Profile.svg');
-    const [selectedFile, setSelectedFile] = useState(null); 
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [user, setUser] = useState(null);
+    
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        setUser(user);
+        if (user && user.picture) {
+            setProfilePicture(user.picture);
+        }
+    }, []);
 
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
@@ -118,7 +127,7 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                 <div className='user-icon'>
                     <img src={profilePicture} alt='User Profile' className='profile-picture-circle'/>
                 </div>
-                <span className='user-name'>Administrador</span>
+                <span className='user-name'>{user ? user.admin == 1 ? user.first_name : `${user.first_name} ${user.last_name}` : 'Usuario'}</span>
 
                 {
                     dropdownVisible && (
@@ -154,13 +163,16 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                                     />
                                 </div>
                                 <div>
-                                    <p>Administrador</p>
+                                    <p><strong>Nombre:</strong> {user.first_name}</p>
                                 </div>
                                 <div>
-                                    <p>admin@hirevision.com</p>
+                                    <p><strong>Apellido:</strong> {user.last_name}</p>
                                 </div>
                                 <div>
-                                    <p>01/01/1990</p>
+                                    <p><strong>Correo Electrónico:</strong> {user.email}</p>
+                                </div>
+                                <div>
+                                    <p><strong>Fecha de Nacimiento:</strong> {user.birth_date.split('T')[0]}</p>
                                 </div>
                                 <button className='save-btn' onClick={handleEditClick}>Editar</button>
                             </>
@@ -183,19 +195,19 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                                 </div>
                                 <form className='columns'>
                                     <div className="form-group">
-                                        <input type='text' id='name' name='name' required placeholder=" " />
+                                        <input type='text' id='name' name='name' required placeholder=" " value={user.first_name} />
                                         <label htmlFor='name'>Nombre</label>
                                     </div>
                                     <div className="form-group">
-                                        <input type='text' id='last-name' name='last-name' required placeholder=" " />
+                                        <input type='text' id='last-name' name='last-name' required placeholder=" " value={user.last_name} />
                                         <label htmlFor='last-name'>Apellido</label>
                                     </div>
                                     <div className="form-group">
-                                        <input type='email' id='email' name='email' required placeholder=" " />
+                                        <input type='email' id='email' name='email' required placeholder=" " value={user.email} />
                                         <label htmlFor='email'>Correo Electrónico</label>
                                     </div>
                                     <div className="form-group">
-                                        <input type='date' id='birthdate' name='birthdate' required placeholder=" " />
+                                        <input type='date' id='birthdate' name='birthdate' required placeholder=" " value={user.birth_date.split('T')[0]} />
                                         <label htmlFor='birthdate'>Fecha de Nacimiento</label>
                                     </div>
                                     <div className="form-group">
