@@ -49,7 +49,6 @@ const Jobs = () => {
                                 <span className="job-date">{formatDate(job.fecha_creacion)}</span>
                             </div>
                             <h2 className="job-title">{job.puesto}</h2>
-                            <p className="job-description">{job.descripcion}</p>
                             <div className="job-skills">
                                 {job.habilidades
                                     .split(',')

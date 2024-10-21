@@ -8,7 +8,6 @@ router.get('/jobs', async (req, res) => {
         SELECT 
             e.ID AS empleo_id,
             e.PUESTO AS puesto,
-            e.DESCRIPCION AS descripcion,
             e.SALARIO AS salario,
             e.FECHA_CREACION AS fecha_creacion,
             GROUP_CONCAT(h.NOMBRE) AS habilidades
@@ -19,7 +18,7 @@ router.get('/jobs', async (req, res) => {
         JOIN 
             HABILIDAD h ON eh.ID_HABILIDAD = h.ID
         GROUP BY 
-            e.ID, e.PUESTO, e.DESCRIPCION, e.SALARIO, e.FECHA_CREACION;
+            e.ID, e.PUESTO, e.SALARIO, e.FECHA_CREACION;
     `;
 
     try {
