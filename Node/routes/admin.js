@@ -4,22 +4,30 @@ const db = require('../utils/db');
 require('dotenv').config();
 
 router.get('/jobs', async (req, res) => {
+    const query = `
+        SELECT 
+            e.ID AS empleo_id,
+            e.PUESTO AS puesto,
+            e.DESCRIPCION AS descripcion,
+            e.SALARIO AS salario,
+            e.FECHA_CREACION AS fecha_creacion,
+            GROUP_CONCAT(h.NOMBRE) AS habilidades
+        FROM 
+            EMPLEO e
+        JOIN 
+            EMPLEO_HABILIDAD eh ON e.ID = eh.ID_EMPLEO
+        JOIN 
+            HABILIDAD h ON eh.ID_HABILIDAD = h.ID
+        GROUP BY 
+            e.ID, e.PUESTO, e.DESCRIPCION, e.SALARIO, e.FECHA_CREACION;
+    `;
+
     try {
-        const [rows] = await db.query('SELECT * FROM EMPLEO');
-        const jobs = rows.map(job => {
-            return {
-                id: job.ID,
-                puesto: job.PUESTO,
-                descripcion: job.DESCRIPCION,
-                salario: job.SALARIO,
-                creacion: job.FECHA_CREACION
-            }
-        });
-        res.json(jobs);
+        const [results] = await db.query(query);
+        res.json(results);
     } catch (err) {
-        res.status(500).json({ err: err.message });
+        res.status(500).json({ error: err.message });
     }
-    console.log('GET /Empleo');
 });
 
 router.post('/create', async (req, res) => {
