@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import './JobApplications.css';
-
-=======
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import './JobApplications.css';
@@ -39,35 +34,11 @@ const DonutChart = ({ percentage }) => {
     );
 };
 
->>>>>>> 77816bd2deeaae485135ce009e89d9dc2123861c
 const JobApplications = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedApplication, setSelectedApplication] = useState(null);
     const [applications, setApplications] = useState([]);
 
-<<<<<<< HEAD
-    const applications = [
-        {
-            puesto: 'Senior UX/UI Designer',
-            postulado: 'Brandon Tejaxún',
-            salario: 1500,
-            fecha: '15/09/2024',
-        },
-        {
-            puesto: 'Consultor de Ciberseguridad',
-            postulado: 'Brandon Tejaxún',
-            salario: 1500,
-            fecha: '15/09/2024',
-        },
-        {
-            puesto: 'Junior Python Developer',
-            postulado: 'Brandon Tejaxún',
-            salario: 1500,
-            fecha: '15/09/2024',
-        },
-    ];
-
-=======
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('es-ES', {
@@ -102,7 +73,6 @@ const JobApplications = () => {
         fetchApplications();
     }, []);
 
->>>>>>> 77816bd2deeaae485135ce009e89d9dc2123861c
     const openModal = (application) => {
         setSelectedApplication(application);
         setIsModalOpen(true);
@@ -115,7 +85,7 @@ const JobApplications = () => {
 
     return (
         <div className="job-applications">
-            <h1>Estado de Postulacións</h1> {/* Título actualizado */}
+            <h1>Postulados</h1>
             <table>
                 <thead>
                     <tr>
@@ -129,17 +99,10 @@ const JobApplications = () => {
                 <tbody>
                     {applications.map((app, index) => (
                         <tr key={index}>
-<<<<<<< HEAD
-                            <td>{app.puesto}</td>
-                            <td>{app.postulado}</td>
-                            <td>Q{app.salario}</td>
-                            <td>{app.fecha}</td>
-=======
                             <td>{app.PUESTO}</td>
                             <td>{app.POSTULADO}</td>
                             <td>Q{app.SALARIO}</td>
                             <td>{formatDate(app.FECHA_CREACION)}</td>
->>>>>>> 77816bd2deeaae485135ce009e89d9dc2123861c
                             <td>
                                 <a onClick={() => openModal(app)}>Ver Perfil</a>
                             </td>
@@ -165,12 +128,9 @@ const JobApplications = () => {
                                     alt="Profile"
                                     className="profile-image-cv"
                                 />
-<<<<<<< HEAD
-=======
                                 <div className="graph-container">
                                     <DonutChart percentage={25} />
                                 </div>
->>>>>>> 77816bd2deeaae485135ce009e89d9dc2123861c
                             </div>
                             <h2>{selectedApplication.POSTULADO} - {selectedApplication.PUESTO}</h2>
                             <div className="skills">
@@ -180,14 +140,6 @@ const JobApplications = () => {
                                 <span>Docker</span>
                             </div>
                             <div className="download-section">
-<<<<<<< HEAD
-                                <select className="format-select">
-                                    <option value="Pendiente" selected="true" disabled>Pendiente</option>
-                                    <option value="Aceptado">Aceptado</option>
-                                    <option value="Rechazado">Rechazado</option>
-                                </select>
-
-=======
                             <button 
                                 className="download-cv"
                                 onClick={() => {
@@ -200,7 +152,6 @@ const JobApplications = () => {
                             >
                                 Ver CV
                             </button>
->>>>>>> 77816bd2deeaae485135ce009e89d9dc2123861c
                             </div>
                         </div>
                     </div>
