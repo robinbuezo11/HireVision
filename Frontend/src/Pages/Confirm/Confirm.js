@@ -51,7 +51,7 @@ const Confirm = () => {
         };
         console.log(JSON.stringify(payload));
 
-        fetch(process.env.REACT_APP_API_URL + '/users/confirm', {
+        fetch(process.env.REACT_APP_API_GATEWAY_URL + '/confirm', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
