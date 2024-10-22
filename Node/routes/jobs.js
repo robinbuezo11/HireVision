@@ -93,6 +93,7 @@ router.get('/postulates', authenticateJWT, async (req, res) => {
             E.PUESTO,
             CONCAT(U.NOMBRE, ' ', U.APELLIDO) AS POSTULADO,
             U.FOTO AS FOTO,
+            U.CV AS CV,
             E.SALARIO,
             P.FECHA_POSTULACION AS FECHA_CREACION
         FROM 

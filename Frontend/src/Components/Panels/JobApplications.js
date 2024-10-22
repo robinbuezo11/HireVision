@@ -132,7 +132,7 @@ const JobApplications = () => {
                                     <DonutChart percentage={25} />
                                 </div>
                             </div>
-                            <h2>{selectedApplication.POSTULADO}</h2>
+                            <h2>{selectedApplication.POSTULADO} - {selectedApplication.PUESTO}</h2>
                             <div className="skills">
                                 <span>Python</span>
                                 <span>JavaScript</span>
