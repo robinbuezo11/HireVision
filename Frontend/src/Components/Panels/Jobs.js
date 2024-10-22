@@ -62,6 +62,10 @@ const Jobs = () => {
         fetchJobs();
     }, []);
 
+    const refreshJobs = () => {
+        fetchJobs();
+    };
+
     const handleNewJobClick = () => {
         setShowJobModal(true);
     };
@@ -136,7 +140,7 @@ const Jobs = () => {
                     <div className="modal-content">
                         <span className="close" onClick={handleCloseJobModal}>&times;</span>
                         <h2 className="title-modal">Nuevo Puesto</h2>
-                        <JobForm handleCloseModal={handleCloseJobModal} />
+                        <JobForm handleCloseModal={handleCloseJobModal} refreshJobs={refreshJobs} />
                     </div>
                 </div>
             )}

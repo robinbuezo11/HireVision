@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import 'react-quill/dist/quill.snow.css';
 import './JobForm.css';
 
-const JobForm = ({ handleCloseModal }) => {
+const JobForm = ({ handleCloseModal, refreshJobs }) => {
     const [description, setDescription] = useState('');
     const [skillInput, setSkillInput] = useState('');
     const [skills, setSkills] = useState([]);
@@ -76,7 +76,8 @@ const JobForm = ({ handleCloseModal }) => {
                     icon: 'success',
                     confirmButtonText: 'Ok'
                 }).then(() => {
-                    handleCloseModal(true);
+                    refreshJobs();
+                    handleCloseModal();
                 });
             }
         })
