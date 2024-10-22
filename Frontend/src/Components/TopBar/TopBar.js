@@ -134,7 +134,7 @@ const TopBar = ({ toggleMenu, menuOpen }) => {
                 {
                     dropdownVisible && (
                         <div className='panel-profile'>
-                            {!(user.first_name === 'admin' && user.last_name === 'admin') && (
+                            {!(user.first_name.toLowerCase() === 'admin' && user.last_name.toLowerCase() === 'admin') && (
                                 <p className='option' onClick={handleViewProfile}> <FaUser /> Mi perfil</p>
                             )}
                             <p className='option logout' onClick={handleLogout}> <IoIosLogOut /> Salir</p>
